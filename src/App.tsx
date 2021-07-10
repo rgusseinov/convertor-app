@@ -1,25 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+  Container,
+} from '@material-ui/core';
+import { useState } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import Header from './components/header/header';
+import Footer from './components/footer/footer';
+import Convertor from './components/convertor/convertor';
+import CurrencyList from './components/currency-list/currency-list';
+import { addToStorage, getFromStorage } from './utils';
+import { baseCurrencyList } from './mock/currency';
 
 function App() {
+  const [baseCurrency, setBaseCurrecny] = useState(getFromStorage())
+
+  const handleBaseCurrencyChange = (currency: string) => {
+    if (currency) {
+      setBaseCurrecny(currency)
+      addToStorage(currency)
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <Header
+        baseCurrency={baseCurrency}
+        baseCurrencyList={baseCurrencyList}
+        onBaseCurrencyChange={handleBaseCurrencyChange}
+      />
+
+      <Switch>
+        <Route path="/" exact>
+          <Convertor />
+        </Route>
+        <Route path="/list">
+          <CurrencyList baseCurrency={baseCurrency} />
+        </Route>
+      </Switch>
+
+      <Footer />
+    </Container>
   );
 }
 
