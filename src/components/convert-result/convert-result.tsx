@@ -2,6 +2,7 @@ import {
   Typography, Card, CardContent, CardActions,
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import { getCurrentDate } from '../../utils';
 import classes from './convertor-result.module.css'
 
 interface ConvertResultProps {
@@ -10,6 +11,7 @@ interface ConvertResultProps {
 
 const ConvertResult: React.FC<ConvertResultProps> = props => {
   const { t } = useTranslation()
+  const currentDate: string = `${getCurrentDate()}`
   return (
     <Card className={classes.card}>
     <CardContent>
@@ -18,7 +20,7 @@ const ConvertResult: React.FC<ConvertResultProps> = props => {
         { props.result }
       </Typography>
       <CardActions>
-        <Typography variant="body2" component="p"> 10.07.2021 </Typography>
+        <Typography variant="body2" component="p"> {currentDate} </Typography>
       </CardActions>
     </CardContent>
   </Card>
