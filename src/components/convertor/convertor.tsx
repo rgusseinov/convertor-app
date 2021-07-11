@@ -3,33 +3,33 @@ import {
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Autocomplete } from '@material-ui/lab';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import ConvertResult from '../convert-result/convert-result'
 import { getFromStorage } from '../../utils';
 import { getConvertedCurrencyList } from '../../api/api';
 import { baseCurrencyList } from '../../mock/currency';
 
 function Convertor() {
-  const baseCurrency = getFromStorage()
+  const baseCurrency = getFromStorage();
   const { t } = useTranslation();
 
-  const [amount, setAmount] = useState(0) // Convertable amount
-  const [currencyType, setCurrencyType] = useState('') // Currency type on which we will convert
-  const [convertValue, setConvertValue] = useState(null) // Final amount
+  const [amount, setAmount] = useState<number>(0) // Convertable amount
+  const [currencyType, setCurrencyType] = useState<any>('') // Currency type on which we will convert
+  const [convertValue, setConvertValue] = useState<any>(null) // Final amount
 
-  const onAmountChange = (evt) => {
-    setAmount(evt.target.value)
+  const onAmountChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    setAmount(Number(evt.target.value))
     setConvertValue(null)
   }
 
-  const onCurrencyTypeChange = (currType) => {
+  const onCurrencyTypeChange = (currType: any) => {
     if (currType) {
       setConvertValue(null)
       setCurrencyType(currType) // Type of currency RUB
     }
   }
 
-  const onConvertAmount = (evt) => {
+  const onConvertAmount = (evt: React.MouseEvent) => {
     evt.preventDefault()
     if (amount && currencyType) {
       getConvertedCurrencyList(amount, baseCurrency, currencyType).then((data) => {
@@ -38,7 +38,7 @@ function Convertor() {
     }
   }
 
-  const convertResult = `${amount} ${baseCurrency} = ${convertValue} ${currencyType}`
+  const convertResult: string = `${amount} ${baseCurrency} = ${convertValue} ${currencyType}`
   return (
     <div style={{ paddingTop: '30px' }}>
         <Grid container justify="center" spacing={2} alignItems="center">

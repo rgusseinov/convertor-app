@@ -7,16 +7,21 @@ import { getCurrentRateList } from '../../api/api';
 import Loader from '../loader';
 import classes from './currency-list.module.css'
 
-function CurrencyList({ baseCurrency }) {
-  const [currencyList, setCurrencyList] = useState(null)
+interface CurrencyListProps {
+  baseCurrency: string
+}
+
+const CurrencyList: React.FC<CurrencyListProps> = props => {
+  
+  const [currencyList, setCurrencyList] = useState<any>(null)
   const { t } = useTranslation();
 
   useEffect(() => {
-    getCurrentRateList(baseCurrency).then((data) => {
+    getCurrentRateList(props.baseCurrency).then((data) => {
       const ratesListToArray = Object.entries(data.rates)
       setCurrencyList(ratesListToArray)
     })
-  }, [baseCurrency])
+  }, [props.baseCurrency])
 
   return (
     <div style={ { marginTop: '30px' }}>
@@ -33,12 +38,12 @@ function CurrencyList({ baseCurrency }) {
             </TableHead>
             <TableBody>
               {
-                currencyList.map((row, index) => {
-                  const currentRate = `${Math.ceil(row[1])} ${row[0]}`
+                currencyList.map((row: Array<number>, index: number) => {
+                  const currentRate: string = `${Math.ceil(row[1])} ${row[0]}`
                   return (
                     <TableRow key={index}>
                       <TableCell> { currentRate } </TableCell>
-                      <TableCell> 1 {baseCurrency} </TableCell>
+                      <TableCell> 1 {props.baseCurrency} </TableCell>
                     </TableRow>
                   )
                 })

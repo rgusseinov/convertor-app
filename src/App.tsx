@@ -10,8 +10,8 @@ import CurrencyList from './components/currency-list/currency-list';
 import { addToStorage, getFromStorage } from './utils';
 import { baseCurrencyList } from './mock/currency';
 
-function App() {
-  const [baseCurrency, setBaseCurrecny] = useState(getFromStorage())
+const App: React.FC = () => {
+  const [baseCurrency, setBaseCurrecny] = useState<string>(getFromStorage())
 
   const handleBaseCurrencyChange = (currency: string) => {
     if (currency) {
