@@ -11,17 +11,23 @@ interface CurrencyListProps {
   baseCurrency: string
 }
 
-const CurrencyList: React.FC<CurrencyListProps> = props => {
+const CurrencyList: React.FC<CurrencyListProps> = ({ baseCurrency }) => {
   
   const [currencyList, setCurrencyList] = useState<any>(null)
   const { t } = useTranslation();
 
   useEffect(() => {
-    getCurrentRateList(props.baseCurrency).then((data) => {
-      const ratesListToArray = Object.entries(data.rates)
-      setCurrencyList(ratesListToArray)
-    })
-  }, [props.baseCurrency])
+    const updateCurrencyList = async () => {
+      try {
+        const data = await getCurrentRateList(baseCurrency);
+        const ratesListToArray = Object.entries(data.rates)
+        setCurrencyList(ratesListToArray)
+      } catch (err){
+        console.error(err)
+      }
+    }
+    updateCurrencyList();
+  }, [baseCurrency])
 
   return (
     <div style={ { marginTop: '30px' }}>
@@ -43,7 +49,7 @@ const CurrencyList: React.FC<CurrencyListProps> = props => {
                   return (
                     <TableRow key={index}>
                       <TableCell> { currentRate } </TableCell>
-                      <TableCell> 1 {props.baseCurrency} </TableCell>
+                      <TableCell> 1 {baseCurrency} </TableCell>
                     </TableRow>
                   )
                 })

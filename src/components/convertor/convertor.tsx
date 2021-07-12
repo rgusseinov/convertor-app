@@ -5,32 +5,33 @@ import { useTranslation } from 'react-i18next';
 import { Autocomplete } from '@material-ui/lab';
 import { ChangeEvent, useState } from 'react';
 import ConvertResult from '../convert-result/convert-result'
-import { getFromStorage } from '../../utils';
 import { getConvertedCurrencyList } from '../../api/api';
 import { baseCurrencyList } from '../../mock/currency';
+import { useEffect } from 'react';
 
-function Convertor() {
-  const baseCurrency = getFromStorage();
-  const { t } = useTranslation();
+interface ConvertorProps {
+  baseCurrency: string
+}
 
+function Convertor(props:ConvertorProps) {
+  const { baseCurrency } = props
+  const { t, i18n } = useTranslation();
+  
+  // i18n.changeLanguage('ru')
   const [amount, setAmount] = useState<number>(0) // Convertable amount
-  const [currencyType, setCurrencyType] = useState<any>('') // Currency type on which we will convert
-  const [convertValue, setConvertValue] = useState<any>(null) // Final amount
+  const [currencyType, setCurrencyType] = useState<string | null>('') // Currency type on which we will convert
+  const [convertValue, setConvertValue] = useState<number | null>(null) // Final amount  
+  const convertResult: string = `${amount} ${baseCurrency} = ${convertValue} ${currencyType}`
 
   const onAmountChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setAmount(Number(evt.target.value))
+  }
+
+  useEffect(() => {
     setConvertValue(null)
-  }
+  }, [amount, currencyType])
 
-  const onCurrencyTypeChange = (currType: any) => {
-    if (currType) {
-      setConvertValue(null)
-      setCurrencyType(currType) // Type of currency RUB
-    }
-  }
-
-  const onConvertAmount = (evt: React.MouseEvent) => {
-    evt.preventDefault()
+  const onConvertAmount = () => {
     if (amount && currencyType) {
       getConvertedCurrencyList(amount, baseCurrency, currencyType).then((data) => {
         setConvertValue(Math.ceil(data.result))
@@ -38,44 +39,43 @@ function Convertor() {
     }
   }
 
-  const convertResult: string = `${amount} ${baseCurrency} = ${convertValue} ${currencyType}`
   return (
     <div style={{ paddingTop: '30px' }}>
-        <Grid container justify="center" spacing={2} alignItems="center">
-            <Grid item xs={12}>
-              <Typography variant="h5"> {t('Convertor')} </Typography>
-            </Grid>
-            <Grid item xs={2} spacing={5}>
-                <TextField
-                  placeholder={t('Please add amount')}
-                  label={`${t('Amount in')}`}
-                  variant="outlined"
-                  onChange={onAmountChange}
-                />
-            </Grid>
-
-            <Grid item xs={2}>
-              <Autocomplete
-                options={ baseCurrencyList }
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label={`${t('Currency type')}`}
-                    variant="outlined" />
-                )}
-                onChange={(evt, value) => onCurrencyTypeChange(value)}
-              />
-            </Grid>
-
-            <Grid item xs={2}>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                onClick={onConvertAmount}>{`${t('Convert')}`}
-              </Button>
-            </Grid>
+      <Grid container justify="center" spacing={2} alignItems="center">
+        <Grid item xs={12}>
+          <Typography variant="h5"> {t('Convertor')} </Typography>
         </Grid>
+        <Grid item xs={2} spacing={5}>
+          <TextField
+            placeholder={t('Please add amount')}
+            label={`${t('Amount in', {name: baseCurrency})}`}
+            variant="outlined"
+            onChange={onAmountChange}
+          />
+        </Grid>
+
+        <Grid item xs={2}>
+          <Autocomplete
+            options={baseCurrencyList}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={`${t('Currency type')}`}
+                variant="outlined" />
+            )}
+            onChange={(evt, value) => setCurrencyType(value)}
+          />
+        </Grid>
+
+        <Grid item xs={2}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            onClick={onConvertAmount}>{`${t('Convert')}`}
+          </Button>
+        </Grid>
+      </Grid>
       {
         convertValue && <ConvertResult result={convertResult} />
       }

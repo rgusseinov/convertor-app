@@ -11,7 +11,6 @@ interface ConvertResultProps {
 
 const ConvertResult: React.FC<ConvertResultProps> = props => {
   const { t } = useTranslation()
-  const currentDate: string = `${getCurrentDate()}`
   return (
     <Card className={classes.card}>
     <CardContent>
@@ -20,7 +19,7 @@ const ConvertResult: React.FC<ConvertResultProps> = props => {
         { props.result }
       </Typography>
       <CardActions>
-        <Typography variant="body2" component="p"> {currentDate} </Typography>
+        <Typography variant="body2" component="p"> {getCurrentDate()} </Typography>
       </CardActions>
     </CardContent>
   </Card>
