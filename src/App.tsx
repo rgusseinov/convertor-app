@@ -9,28 +9,30 @@ import Convertor from './components/convertor/convertor';
 import CurrencyList from './components/currency-list/currency-list';
 import { addToStorage, getFromStorage } from './utils';
 import { baseCurrencyList } from './mock/currency';
+import { useEffect } from 'react';
 
-function App() {
-  const [baseCurrency, setBaseCurrecny] = useState(getFromStorage())
+const App: React.FC = () => {
+  const [baseCurrency, setBaseCurrecny] = useState<string>(getFromStorage())
 
-  const handleBaseCurrencyChange = (currency: string) => {
-    if (currency) {
-      setBaseCurrecny(currency)
-      addToStorage(currency)
-    }
-  }
+  useEffect(() => {
+    const saveCurrency = () => {
+      if (!baseCurrency) return
+      addToStorage(baseCurrency);
+    };
+    saveCurrency();
+  }, [baseCurrency]);
 
   return (
     <Container>
       <Header
         baseCurrency={baseCurrency}
         baseCurrencyList={baseCurrencyList}
-        onBaseCurrencyChange={handleBaseCurrencyChange}
+        onBaseCurrencyChange={setBaseCurrecny}
       />
 
       <Switch>
         <Route path="/" exact>
-          <Convertor />
+          <Convertor baseCurrency={baseCurrency} />
         </Route>
         <Route path="/list">
           <CurrencyList baseCurrency={baseCurrency} />

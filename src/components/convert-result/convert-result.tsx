@@ -2,19 +2,24 @@ import {
   Typography, Card, CardContent, CardActions,
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import { getCurrentDate } from '../../utils';
 import classes from './convertor-result.module.css'
 
-function ConvertResult({ result }) {
+interface ConvertResultProps {
+  result: string
+}
+
+const ConvertResult: React.FC<ConvertResultProps> = props => {
   const { t } = useTranslation()
   return (
     <Card className={classes.card}>
     <CardContent>
       <Typography gutterBottom variant="h5" component="h2"> {t('Result')} </Typography>
       <Typography variant="h4" className={classes.title} color="textPrimary" gutterBottom>
-        { result }
+        { props.result }
       </Typography>
       <CardActions>
-        <Typography variant="body2" component="p"> 10.07.2021 </Typography>
+        <Typography variant="body2" component="p"> {getCurrentDate()} </Typography>
       </CardActions>
     </CardContent>
   </Card>

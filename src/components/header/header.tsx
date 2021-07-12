@@ -6,7 +6,13 @@ import { useTranslation } from 'react-i18next';
 import { NavLink, useLocation } from 'react-router-dom'
 import classes from './header.module.css'
 
-function Header({ baseCurrency, baseCurrencyList, onBaseCurrencyChange }) {
+interface HeaderProps {
+  baseCurrency: string
+  baseCurrencyList: Array<string>
+  onBaseCurrencyChange(currency: any): void
+}
+
+const Header: React.FC<HeaderProps> = props => {
   const location = useLocation();
   const { t } = useTranslation();
 
@@ -26,10 +32,10 @@ function Header({ baseCurrency, baseCurrencyList, onBaseCurrencyChange }) {
       </Grid>
       <Grid item xs={2}>
         <Autocomplete
-            value={baseCurrency}
-            defaultValue={baseCurrency}
-            onChange={(evt, newValue) => onBaseCurrencyChange(newValue)}
-            options={baseCurrencyList}
+            value={props.baseCurrency}
+            defaultValue={props.baseCurrency}
+            onChange={(evt, newValue) => props.onBaseCurrencyChange(newValue)}
+            options={props.baseCurrencyList}
             renderInput={(params) => (
               <TextField {...params} label={`${t('Base currency')}`} margin="normal" variant="outlined" />
             )}
