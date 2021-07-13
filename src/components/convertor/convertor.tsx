@@ -9,6 +9,7 @@ import { getConvertedCurrencyList } from '../../api/api';
 import { baseCurrencyList } from '../../mock/currency';
 import { useEffect } from 'react';
 import classes from './convertor.module.css';
+import Loader from '../Loader/loader';
 
 interface ConvertorProps {
   baseCurrency: string
@@ -16,12 +17,14 @@ interface ConvertorProps {
 
 function Convertor(props:ConvertorProps) {
   const { baseCurrency } = props
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   
   // i18n.changeLanguage('ru')
   const [amount, setAmount] = useState<number>(0) // Convertable amount
   const [currencyType, setCurrencyType] = useState<string | null>('') // Currency type on which we will convert
   const [convertValue, setConvertValue] = useState<number | null>(null) // Final amount  
+  const [loading, setLoading] = useState<boolean>(false);
+
   const convertResult: string = `${amount} ${baseCurrency} = ${convertValue} ${currencyType}`
 
   const onAmountChange = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -29,14 +32,20 @@ function Convertor(props:ConvertorProps) {
   }
 
   useEffect(() => {
-    setConvertValue(null)
+    setConvertValue(null)    
   }, [amount, currencyType])
 
-  const onConvertAmount = () => {
+  const onConvertAmount = async () => {
     if (amount && currencyType) {
-      getConvertedCurrencyList(amount, baseCurrency, currencyType).then((data) => {
-        setConvertValue(Math.ceil(data.result))
-      })
+      try {
+        setLoading(true);
+        const data = await getConvertedCurrencyList(amount, baseCurrency, currencyType);
+        setConvertValue(Math.ceil(data.result));
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        console.error(error);
+      }
     }
   }
 
@@ -75,6 +84,10 @@ function Convertor(props:ConvertorProps) {
           </Button>
         </Grid>
       </Grid>
+      {
+        loading ? ( <Loader /> ) : null 
+      }
+
       { convertValue && <ConvertResult result={convertResult} /> }
     </div>
   );

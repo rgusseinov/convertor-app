@@ -4,7 +4,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getCurrentRateList } from '../../api/api';
-import Loader from '../loader';
+import Loader from '../Loader/loader';
 import classes from './currency-list.module.css'
 
 interface CurrencyListProps {
@@ -30,7 +30,7 @@ const CurrencyList: React.FC<CurrencyListProps> = ({ baseCurrency }) => {
   }, [baseCurrency])
 
   return (
-    <div style={ { marginTop: '30px' }}>
+    <div className={classes.mt30}>
       <Typography variant="h4"> {t('Exchange Rate')} </Typography> <br/>
       {
         currencyList ? (
