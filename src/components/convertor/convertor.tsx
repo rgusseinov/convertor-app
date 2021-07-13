@@ -45,20 +45,7 @@ function Convertor(props:ConvertorProps) {
       <Grid container justify="center" spacing={2} alignItems="center">
         <Grid item xs={12}>
           <Typography variant="h5"> {t('Convertor')} </Typography>
-        </Grid>
-        
-{/*         <Grid item xs={2}>
-        <Autocomplete
-            value={props.baseCurrency}
-            defaultValue={props.baseCurrency}
-            onChange={(evt, newValue) => props.onBaseCurrencyChange(newValue)}
-            options={props.baseCurrencyList}
-            renderInput={(params) => (
-              <TextField {...params} label={`${t('Base currency')}`} margin="normal" variant="outlined" />
-            )}
-          />
-        </Grid> */}
-
+        </Grid>        
         <Grid item xs={2} spacing={5}>
           <TextField
             placeholder={t('Please add amount')}
@@ -67,7 +54,6 @@ function Convertor(props:ConvertorProps) {
             onChange={onAmountChange}
           />
         </Grid>
-
         <Grid item xs={2}>
           <Autocomplete
             options={baseCurrencyList}
@@ -80,7 +66,6 @@ function Convertor(props:ConvertorProps) {
             onChange={(evt, value) => setCurrencyType(value)}
           />
         </Grid>
-
         <Grid item xs={2}>
           <Button
             type="submit"
@@ -90,9 +75,7 @@ function Convertor(props:ConvertorProps) {
           </Button>
         </Grid>
       </Grid>
-      {
-        convertValue && <ConvertResult result={convertResult} />
-      }
+      { convertValue && <ConvertResult result={convertResult} /> }
     </div>
   );
 }
