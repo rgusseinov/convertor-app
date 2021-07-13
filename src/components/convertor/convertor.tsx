@@ -8,6 +8,7 @@ import ConvertResult from '../convert-result/convert-result'
 import { getConvertedCurrencyList } from '../../api/api';
 import { baseCurrencyList } from '../../mock/currency';
 import { useEffect } from 'react';
+import classes from './convertor.module.css';
 
 interface ConvertorProps {
   baseCurrency: string
@@ -40,11 +41,11 @@ function Convertor(props:ConvertorProps) {
   }
 
   return (
-    <div style={{ paddingTop: '30px' }}>
+    <div className={classes.mt30}>
       <Grid container justify="center" spacing={2} alignItems="center">
         <Grid item xs={12}>
           <Typography variant="h5"> {t('Convertor')} </Typography>
-        </Grid>
+        </Grid>        
         <Grid item xs={2} spacing={5}>
           <TextField
             placeholder={t('Please add amount')}
@@ -53,7 +54,6 @@ function Convertor(props:ConvertorProps) {
             onChange={onAmountChange}
           />
         </Grid>
-
         <Grid item xs={2}>
           <Autocomplete
             options={baseCurrencyList}
@@ -66,7 +66,6 @@ function Convertor(props:ConvertorProps) {
             onChange={(evt, value) => setCurrencyType(value)}
           />
         </Grid>
-
         <Grid item xs={2}>
           <Button
             type="submit"
@@ -76,9 +75,7 @@ function Convertor(props:ConvertorProps) {
           </Button>
         </Grid>
       </Grid>
-      {
-        convertValue && <ConvertResult result={convertResult} />
-      }
+      { convertValue && <ConvertResult result={convertResult} /> }
     </div>
   );
 }
