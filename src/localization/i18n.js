@@ -23,6 +23,7 @@ const resources = {
       'Amount in': 'Сумма в {{name}}',
       'Currency type': 'Тип валюты',
       'Base currency': 'Базовая валюта',
+      'Base language': 'Язык сайта',
       Convert: 'Конвертировать',
       Result: 'Результат',
       Copyright: 'Все права защищены',

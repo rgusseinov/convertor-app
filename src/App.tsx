@@ -10,9 +10,13 @@ import CurrencyList from './components/currency-list/currency-list';
 import { addToStorage, getFromStorage } from './utils';
 import { baseCurrencyList } from './mock/currency';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import languages from './mock/languages';
 
 const App: React.FC = () => {
-  const [baseCurrency, setBaseCurrecny] = useState<string>(getFromStorage())
+  const [baseCurrency, setBaseCurrency] = useState<string>(getFromStorage())
+  const [baseLanguage, setBaseLanguage] = useState<string>(languages[0])
+  const { i18n } = useTranslation()
 
   useEffect(() => {
     const saveCurrency = () => {
@@ -20,14 +24,19 @@ const App: React.FC = () => {
       addToStorage(baseCurrency);
     };
     saveCurrency();
-  }, [baseCurrency]);
+    const languageToLower = baseLanguage.toLocaleLowerCase()
+    i18n.changeLanguage(languageToLower);
+  }, [baseCurrency, baseLanguage]);
 
   return (
     <Container>
       <Header
         baseCurrency={baseCurrency}
         baseCurrencyList={baseCurrencyList}
-        onBaseCurrencyChange={setBaseCurrecny}
+        baseLanguage={baseLanguage}
+        languages={languages}
+        onBaseCurrencyChange={setBaseCurrency}
+        onLanguageChange={setBaseLanguage}
       />
 
       <Switch>

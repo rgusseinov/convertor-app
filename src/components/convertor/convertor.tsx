@@ -8,6 +8,7 @@ import ConvertResult from '../convert-result/convert-result'
 import { getConvertedCurrencyList } from '../../api/api';
 import { baseCurrencyList } from '../../mock/currency';
 import { useEffect } from 'react';
+import classes from './convertor.module.css';
 
 interface ConvertorProps {
   baseCurrency: string
@@ -40,11 +41,24 @@ function Convertor(props:ConvertorProps) {
   }
 
   return (
-    <div style={{ paddingTop: '30px' }}>
+    <div className={classes.mt30}>
       <Grid container justify="center" spacing={2} alignItems="center">
         <Grid item xs={12}>
           <Typography variant="h5"> {t('Convertor')} </Typography>
         </Grid>
+        
+{/*         <Grid item xs={2}>
+        <Autocomplete
+            value={props.baseCurrency}
+            defaultValue={props.baseCurrency}
+            onChange={(evt, newValue) => props.onBaseCurrencyChange(newValue)}
+            options={props.baseCurrencyList}
+            renderInput={(params) => (
+              <TextField {...params} label={`${t('Base currency')}`} margin="normal" variant="outlined" />
+            )}
+          />
+        </Grid> */}
+
         <Grid item xs={2} spacing={5}>
           <TextField
             placeholder={t('Please add amount')}
