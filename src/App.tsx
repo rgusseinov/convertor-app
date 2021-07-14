@@ -1,7 +1,7 @@
 import {
   Container,
 } from '@material-ui/core';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Header from './components/header/header';
 import Footer from './components/footer/footer';
@@ -14,17 +14,17 @@ import { useTranslation } from 'react-i18next';
 import languages from './mock/languages';
 
 const App: React.FC = () => {
-  const [baseCurrency, setBaseCurrency] = useState<string>(getFromStorage())
-  const [baseLanguage, setBaseLanguage] = useState<string>(languages[0])
-  const { i18n } = useTranslation()
+  const [baseCurrency, setBaseCurrency] = useState<string>(getFromStorage());
+  const [baseLanguage, setBaseLanguage] = useState<string>(languages[0]);
+  const { i18n } = useTranslation();
 
   useEffect(() => {
     const saveCurrency = () => {
-      if (!baseCurrency) return
+      if (!baseCurrency) return;
       addToStorage(baseCurrency);
     };
     saveCurrency();
-    const languageToLower = baseLanguage.toLocaleLowerCase()
+    const languageToLower = baseLanguage.toLocaleLowerCase();
     i18n.changeLanguage(languageToLower);
   }, [baseCurrency, baseLanguage]);
 
@@ -51,6 +51,6 @@ const App: React.FC = () => {
       <Footer />
     </Container>
   );
-}
+};
 
 export default App;

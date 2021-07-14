@@ -1,5 +1,5 @@
 import React from 'react';
-import { CircularProgress, Grid } from '@material-ui/core'
+import { CircularProgress, Grid } from '@material-ui/core';
 import classes from './loader.module.css';
 
 const Loader: React.FC = () => {
@@ -9,7 +9,7 @@ const Loader: React.FC = () => {
         <CircularProgress />
       </Grid>
     </div>
-  )
-}
+  );
+};
 
-export default Loader
+export default Loader;

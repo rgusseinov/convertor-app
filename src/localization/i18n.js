@@ -11,6 +11,7 @@ const resources = {
       Brand: 'Free Convertor',
       'Exchange Rates': 'Exchange Rates',
       'Exchange Rate': 'Exchange Rate',
+      'Amount in': 'Amount in {{name}}',
     },
   },
   ru: {
@@ -24,6 +25,7 @@ const resources = {
       'Currency type': 'Тип валюты',
       'Base currency': 'Базовая валюта',
       'Base language': 'Язык сайта',
+      'Exchange Rate': 'Обмен Валют',
       Convert: 'Конвертировать',
       Result: 'Результат',
       Copyright: 'Все права защищены',

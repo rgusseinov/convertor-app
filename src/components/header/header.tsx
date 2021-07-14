@@ -1,10 +1,11 @@
+import React from 'react';
 import {
   AppBar, Toolbar, Typography, TextField, Grid,
 } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import { useTranslation } from 'react-i18next';
-import { NavLink, useLocation } from 'react-router-dom'
-import classes from './header.module.css'
+import { NavLink, useLocation } from 'react-router-dom';
+import classes from './header.module.css';
 
 interface HeaderProps {
   baseCurrency: string
@@ -60,6 +61,6 @@ const Header: React.FC<HeaderProps> = props => {
     </AppBar>
 
   );
-}
+};
 
 export default Header;

@@ -1,10 +1,11 @@
+import React from 'react';
 import {
   Typography, Grid, Button, TextField,
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Autocomplete } from '@material-ui/lab';
 import { ChangeEvent, useState } from 'react';
-import ConvertResult from '../convert-result/convert-result'
+import ConvertResult from '../convert-result/convert-result';
 import { getConvertedCurrencyList } from '../../api/api';
 import { baseCurrencyList } from '../../mock/currency';
 import { useEffect } from 'react';
@@ -16,24 +17,23 @@ interface ConvertorProps {
 }
 
 function Convertor(props:ConvertorProps) {
-  const { baseCurrency } = props
+  const { baseCurrency } = props;
   const { t } = useTranslation();
   
-  // i18n.changeLanguage('ru')
-  const [amount, setAmount] = useState<number>(0) // Convertable amount
-  const [currencyType, setCurrencyType] = useState<string | null>('') // Currency type on which we will convert
-  const [convertValue, setConvertValue] = useState<number | null>(null) // Final amount  
+  const [amount, setAmount] = useState<number>(0); // Convertable amount
+  const [currencyType, setCurrencyType] = useState<string | null>(''); // Currency type on which we will convert
+  const [convertValue, setConvertValue] = useState<number | null>(null); // Final amount  
   const [loading, setLoading] = useState<boolean>(false);
 
-  const convertResult: string = `${amount} ${baseCurrency} = ${convertValue} ${currencyType}`
+  const convertResult = `${amount} ${baseCurrency} = ${convertValue} ${currencyType}`;
 
   const onAmountChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    setAmount(Number(evt.target.value))
-  }
+    setAmount(Number(evt.target.value));
+  };
 
   useEffect(() => {
-    setConvertValue(null)    
-  }, [amount, currencyType])
+    setConvertValue(null);    
+  }, [amount, currencyType]);
 
   const onConvertAmount = async () => {
     if (amount && currencyType) {
@@ -47,7 +47,7 @@ function Convertor(props:ConvertorProps) {
         console.error(error);
       }
     }
-  }
+  };
 
   return (
     <div className={classes.mt30}>
@@ -87,7 +87,6 @@ function Convertor(props:ConvertorProps) {
       {
         loading ? ( <Loader /> ) : null 
       }
-
       { convertValue && <ConvertResult result={convertResult} /> }
     </div>
   );

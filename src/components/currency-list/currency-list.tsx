@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getCurrentRateList } from '../../api/api';
 import Loader from '../Loader/loader';
-import classes from './currency-list.module.css'
+import classes from './currency-list.module.css';
 
 interface CurrencyListProps {
   baseCurrency: string
@@ -13,21 +13,21 @@ interface CurrencyListProps {
 
 const CurrencyList: React.FC<CurrencyListProps> = ({ baseCurrency }) => {
   
-  const [currencyList, setCurrencyList] = useState<any>(null)
+  const [currencyList, setCurrencyList] = useState<any>(null);
   const { t } = useTranslation();
 
   useEffect(() => {
     const updateCurrencyList = async () => {
       try {
         const data = await getCurrentRateList(baseCurrency);
-        const ratesListToArray = Object.entries(data.rates)
-        setCurrencyList(ratesListToArray)
+        const ratesListToArray = Object.entries(data.rates);
+        setCurrencyList(ratesListToArray);
       } catch (err){
-        console.error(err)
+        console.error(err);
       }
-    }
+    };
     updateCurrencyList();
-  }, [baseCurrency])
+  }, [baseCurrency]);
 
   return (
     <div className={classes.mt30}>
@@ -45,13 +45,13 @@ const CurrencyList: React.FC<CurrencyListProps> = ({ baseCurrency }) => {
             <TableBody>
               {
                 currencyList.map((row: Array<number>, index: number) => {
-                  const currentRate: string = `${Math.ceil(row[1])} ${row[0]}`
+                  const currentRate = `${Math.ceil(row[1])} ${row[0]}`;
                   return (
                     <TableRow key={index}>
                       <TableCell> { currentRate } </TableCell>
                       <TableCell> 1 {baseCurrency} </TableCell>
                     </TableRow>
-                  )
+                  );
                 })
               }
             </TableBody>
@@ -61,6 +61,6 @@ const CurrencyList: React.FC<CurrencyListProps> = ({ baseCurrency }) => {
       }
     </div>
   );
-}
+};
 
 export default CurrencyList;
