@@ -1,16 +1,17 @@
+import React from 'react';
 import {
   Typography, Card, CardContent, CardActions,
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { getCurrentDate } from '../../utils';
-import classes from './convertor-result.module.css'
+import classes from './convertor-result.module.css';
 
 interface ConvertResultProps {
   result: string
 }
 
 const ConvertResult: React.FC<ConvertResultProps> = props => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   return (
     <Card className={classes.card}>
     <CardContent>
@@ -23,7 +24,7 @@ const ConvertResult: React.FC<ConvertResultProps> = props => {
       </CardActions>
     </CardContent>
   </Card>
-  )
-}
+  );
+};
 
-export default ConvertResult
+export default ConvertResult;

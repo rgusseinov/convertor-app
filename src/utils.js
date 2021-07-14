@@ -1,14 +1,14 @@
-import { baseCurrencyList } from './mock/currency'
+import { baseCurrencyList } from './mock/currency';
 
 export function addToStorage(item) {
-  localStorage.setItem('baseitem', JSON.stringify(item))
+  localStorage.setItem('baseitem', JSON.stringify(item));
 }
 
 export function getFromStorage() {
   if (!localStorage.getItem('baseitem')) {
-    addToStorage(baseCurrencyList[0])
+    addToStorage(baseCurrencyList[0]);
   }
-  return JSON.parse(localStorage.getItem('baseitem'))
+  return JSON.parse(localStorage.getItem('baseitem'));
 }
 
 export function getCurrentDate() {
