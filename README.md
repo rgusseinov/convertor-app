@@ -2,12 +2,12 @@
 
 Free app which convert amount from one currency to another. Furthermore app shows the list of exchange rate.
 
-## Resources
+## What i used in this project
 
-* Uses API from nocodeapi.com service.
+* API from nocodeapi.com service.
 * React Material UI
 * TypeScript
-* React i18next localization
+* React i18next Localization
 * React Router DOM
 * CSS Modules
 * Eslint
@@ -15,4 +15,4 @@ Free app which convert amount from one currency to another. Furthermore app show
 
 ## Demo
 
-[See Demo]()
+[See Demo](https://rgusseinov.github.io/convertor-app/)
