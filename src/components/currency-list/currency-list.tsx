@@ -45,7 +45,7 @@ const CurrencyList: React.FC<CurrencyListProps> = ({ baseCurrency }) => {
             <TableBody>
               {
                 currencyList.map((row: Array<number>, index: number) => {
-                  const currentRate = `${Math.ceil(row[1])} ${row[0]}`;
+                  const currentRate = `${row[1].toFixed(2)} ${row[0]}`;
                   return (
                     <TableRow key={index}>
                       <TableCell> { currentRate } </TableCell>
